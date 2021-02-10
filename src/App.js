@@ -22,61 +22,54 @@ function App() {
              display: "flex",
              justifyContent: "center",
              alignItems: "center",
-             paddingTop: "40px"
+             paddingTop: "40px",
            }}>
-        <Box justify="center" width='80%'>
+        <Box justify="center" width='80%' flexWrap="wrap" >
         <Grid
           container
-          direction="row"
-          justify="center"
+          justify="space-evenly"
           alignItems="center"
-          spacing={3}
+          spacing={10}
         >
             {workouts.map((tile) => (
-              <Grid
-                item xs={3}
-                className={classes.gridItem}
-                onMouseOver={() => setIsShown(tile.id)}
-                onMouseOut={() => setIsShown(null)}
-              >
-              <Paper elevation={5} variant="outlined" >
-                <div className={classes.container}>
-                  <img
-                    src={require(`./assets/images/${tile.name}-thumb.jpg`)}
-                    alt={tile.name}
-                    className={classes.topImg}
-                  />
-                  ${tile.count && <div className={classes.textRight}>
-                  <h4 className={classes.workoutCount}>{tile.count}</h4>
-                  <Typography>workouts</Typography>
-                  <PlaylistPlayIcon/>
-                </div>
-                }
-                </div>
-                  <Grid container spacing={0}>
-                    <Grid item xs={8}>
-                      <h5 className={classes.workoutHeading}>{tile.title}</h5>
-                    </Grid>
-                    <Grid item xs={2}>
+                <Paper elevation={10} variant="outlined" className={classes.root} onMouseOver={() => setIsShown(tile.id)}
+                       onMouseOut={() => setIsShown(null)} >
+                  <div className={classes.container}>
                     <img
-                      src={require(`./assets/images/${tile.name}-trainer.jpg`)}
+                      src={require(`./assets/images/${tile.name}-thumb.jpg`)}
                       alt={tile.name}
-                      className={classes.smallImg}
+                      className={classes.topImg}
                     />
+                    ${tile.count && <div className={classes.textRight}>
+                    <h4 className={classes.workoutCount}>{tile.count}</h4>
+                    <Typography>workouts</Typography>
+                    <PlaylistPlayIcon/>
+                  </div>
+                  }
+                  </div>
+                    <Grid container spacing={0}>
+                      <Grid item xs={8}>
+                        <h5 className={classes.workoutHeading}>{tile.title}</h5>
+                      </Grid>
+                      <Grid item xs={2}>
+                      <img
+                        src={require(`./assets/images/${tile.name}-trainer.jpg`)}
+                        alt={tile.name}
+                        className={classes.smallImg}
+                      />
+                      </Grid>
+                      <Grid item>
+                        {tile.time && tile.distance &&
+                        <Typography className={classes.text}>
+                         <TimerIcon className={classes.iconPadding}/>{tile.time}
+                          <DirectionsRunIcon className={classes.iconPadding}/> {tile.distance}
+                        </Typography>}
+                          <Typography className={classes.text} style={{color: 'blue'}} >
+                            {isShown === tile.id ? 'View Details' : ''}
+                          </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      {tile.time && tile.distance &&
-                      <Typography className={classes.text}>
-                       <TimerIcon className={classes.iconPadding}/>{tile.time}
-                        <DirectionsRunIcon className={classes.iconPadding}/> {tile.distance}
-                      </Typography>}
-                        <Typography className={classes.text} style={{color: 'blue'}} >
-                          {isShown === tile.id ? 'View Details' : ''}
-                        </Typography>
-                    </Grid>
-                  </Grid>
-              </Paper>
-              </Grid>
+                </Paper>
               )
             )}
         </Grid>
@@ -87,39 +80,46 @@ function App() {
 }
 
 const useStyles = makeStyles(() => ({
-  paper: {
-    textAlign: 'center',
+  root: {
+    width: 275,
+    height: 300,
+    marginBottom: '20px',
   },
   topImg: {
     width: '100%',
-    height: '50%',
+    height: '100%',
+    paddingBottom: '2px',
     },
   smallImg: {
     width: 40,
     height: 40,
-    paddingTop: '20px',
+    paddingTop: '5px',
+    paddingLeft: '20px'
   },
   iconPadding: {
     paddingLeft: '1px',
     paddingRight: '1px',
+    marginLeft: '2px',
     fontSize: 12,
   },
   text: {
     fontSize: 12,
   },
   workoutHeading: {
+    marginTop: '2px',
     marginBottom: '2px',
+    marginLeft: '4px',
   },
   workoutCount: {
-    marginBottom: '8px',
+    height: '50%',
   },
   gridItem: {
     height: 240,
   },
   textRight: {
     position: 'absolute',
-    top: '0px',
-    right: '0px',
+    top: '2px',
+    right: '2px',
     background: '#000000',
     opacity: 0.5,
 },
@@ -127,7 +127,8 @@ const useStyles = makeStyles(() => ({
     position: 'relative',
     textAlign: 'center',
     color: 'white',
-}
+    padding: '2px'
+},
 }));
 
 export default App;
